@@ -7,7 +7,8 @@ func main() {
 	conferenceName := "Go Conference"
 	const conferenceTickets = 50
 	var remainingTickets uint = 50
-	var bookings []string
+	// var bookings []string //dry go version below
+	bookings := []string{}
 
 	fmt.Printf("conference tickets is %T, and remainingTickets is %T, conferenceName is %T\n", conferenceTickets, remainingTickets, conferenceName)
 
@@ -17,7 +18,7 @@ func main() {
 
 	
 	// var bookings = [50]string{}// dry go version below
-	
+	// bookings := [50]string{}
 
 
 	var firstName string
@@ -40,12 +41,14 @@ func main() {
 	remainingTickets = remainingTickets - userTickets
 	bookings = append(bookings, firstName + " " + lastName)
 
-	fmt.Printf("The whole slice: %v\n", bookings)
-	fmt.Printf("The first value: %v\n", bookings[0])
-	fmt.Printf("slice type: %T\n", bookings)
-	fmt.Printf("slice length: %v\n", len(bookings))
+	// fmt.Printf("The whole slice: %v\n", bookings)
+	// fmt.Printf("The first value: %v\n", bookings[0])
+	// fmt.Printf("slice type: %T\n", bookings)
+	// fmt.Printf("slice length: %v\n", len(bookings))
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. you will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+
+	fmt.Printf("These are all our bookings: %v\n", bookings)
 
 }
