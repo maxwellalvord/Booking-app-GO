@@ -36,23 +36,48 @@ func main() {
 		fmt.Println("Enter number of tickets: ")
 		fmt.Scan(&userTickets)
 
-		remainingTickets = remainingTickets - userTickets
-		bookings = append(bookings, firstName + " " + lastName)
+		isValidName := len(firstName) >= 2 && len(lastName) >= 2
+		isValidEmail := strings.Contains(email, "@")
+		isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets 
 
-		// fmt.Printf("The whole slice: %v\n", bookings)
-		// fmt.Printf("The first value: %v\n", bookings[0])
-		// fmt.Printf("slice type: %T\n", bookings)
-		// fmt.Printf("slice length: %v\n", len(bookings))
 
-		fmt.Printf("Thank you %v %v for booking %v tickets. you will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
-		fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+		if isValidName && isValidEmail && isValidTicketNumber {
+			remainingTickets = remainingTickets - userTickets
+			bookings = append(bookings, firstName + " " + lastName)
 
-		firstNames := []string{}
-		for _, booking := range bookings { // _ are used to ignore a variable you don't want to use
-			var names = strings.Fields(booking)
-			firstNames = append(firstNames, names[0])
-		}
-		fmt.Printf("The first name of bookings are: %v\n", firstNames)
+			// fmt.Printf("The whole slice: %v\n", bookings)
+			// fmt.Printf("The first value: %v\n", bookings[0])
+			// fmt.Printf("slice type: %T\n", bookings)
+			// fmt.Printf("slice length: %v\n", len(bookings))
+
+			fmt.Printf("Thank you %v %v for booking %v tickets. you will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
+			fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+
+			firstNames := []string{}
+			for _, booking := range bookings { // _ are used to ignore a variable you don't want to use
+				var names = strings.Fields(booking)
+				firstNames = append(firstNames, names[0])
+			}
+			fmt.Printf("The first name of bookings are: %v\n", firstNames)
+
+			// var noTicketsRemaining bool = remainingTickets == 0// dry version below, because we only use this variable once we would not do this in Prod
+			noTicketsRemaining := remainingTickets == 0
+			if noTicketsRemaining {
+				//end program
+				fmt.Println("Our conference is booked up. Come back next year.")
+				break
+			}
+		} else {
+			if !isValidName {
+				fmt.Println("First name or last name you entered is too short")
+			}
+			if !isValidEmail {
+				fmt.Println("email address you entered doesn't contain @ sign")
+			}
+			if !isValidTicketNumber {
+				fmt.Println("number of tickets you entered is invalid")
+			}
+		}		
 	}
 	
 	// var bookings = [50]string{}// dry go version below
