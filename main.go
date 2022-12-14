@@ -12,11 +12,9 @@ func main() {
 	// var bookings []string //dry go version below
 	bookings := []string{}
 
-	fmt.Printf("conference tickets is %T, and remainingTickets is %T, conferenceName is %T\n", conferenceTickets, remainingTickets, conferenceName)
+	greetUsers(conferenceName, conferenceTickets, remainingTickets)
 
-	fmt.Printf("Welcome to %v booking application.\n", conferenceName)
-	fmt.Printf("We have a total of %v tickets and %v are still available.\n", conferenceTickets, remainingTickets)
-	fmt.Println("Get your tickets here to attend")
+	// fmt.Printf("conference tickets is %T, and remainingTickets is %T, conferenceName is %T\n", conferenceTickets, remainingTickets, conferenceName)
 	
 	for {
 		var firstName string
@@ -53,12 +51,7 @@ func main() {
 			fmt.Printf("Thank you %v %v for booking %v tickets. you will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
 			fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 
-			firstNames := []string{}
-			for _, booking := range bookings { // _ are used to ignore a variable you don't want to use
-				var names = strings.Fields(booking)
-				firstNames = append(firstNames, names[0])
-			}
-			fmt.Printf("The first name of bookings are: %v\n", firstNames)
+			printFirstNames(bookings)
 
 			// var noTicketsRemaining bool = remainingTickets == 0// dry version below, because we only use this variable once we would not do this in Prod
 			noTicketsRemaining := remainingTickets == 0
@@ -79,9 +72,23 @@ func main() {
 			}
 		}		
 	}
-	
 	// var bookings = [50]string{}// dry go version below
 	// bookings := [50]string{}
+}
 
+func greetUsers(confName string, confTickets int, remainingTickets uint) {
+	fmt.Printf("Welcome to %v booking application\n", confName)
+	fmt.Printf("We have a total of %v tickets and %v are still available.\n", confTickets, remainingTickets)
+	fmt.Println("Get your tickets here to attend")
+}
 
+func printFirstNames(bookings []string) {
+	firstNames := []string{}
+
+	for _, booking := range bookings { // _ are used to ignore a variable you don't want to use
+		var names = strings.Fields(booking)
+		firstNames = append(firstNames, names[0])
+	}
+
+	fmt.Printf("The first name of bookings are: %v\n", firstNames)
 }
