@@ -51,7 +51,8 @@ func main() {
 			fmt.Printf("Thank you %v %v for booking %v tickets. you will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
 			fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 
-			printFirstNames(bookings)
+			firstNames := getFirstNames(bookings)
+			fmt.Printf("The first names of the bookings are : %v\n", firstNames)
 
 			// var noTicketsRemaining bool = remainingTickets == 0// dry version below, because we only use this variable once we would not do this in Prod
 			noTicketsRemaining := remainingTickets == 0
@@ -82,13 +83,12 @@ func greetUsers(confName string, confTickets int, remainingTickets uint) {
 	fmt.Println("Get your tickets here to attend")
 }
 
-func printFirstNames(bookings []string) {
+func getFirstNames(bookings []string) []string {
 	firstNames := []string{}
 
 	for _, booking := range bookings { // _ are used to ignore a variable you don't want to use
 		var names = strings.Fields(booking)
 		firstNames = append(firstNames, names[0])
 	}
-
-	fmt.Printf("The first name of bookings are: %v\n", firstNames)
+	return firstNames
 }
