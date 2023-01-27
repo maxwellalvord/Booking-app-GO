@@ -3,7 +3,8 @@ package main
 import (
 		"fmt"
 		"strings"
-		"booking-GO/helper"
+		"strconv"
+		
 )		
 
 
@@ -14,6 +15,8 @@ var remainingTickets uint = 50
 // var bookings []string //dry go version below// ****
 var bookings = []string{}
 
+
+
 func main() {
 
 
@@ -22,7 +25,7 @@ func main() {
 	for {
 		
 		firstName, lastName, email, userTickets := getUserInput()
-		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets)
+		isValidName, isValidEmail, isValidTicketNumber := ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets)
 
 		if isValidName && isValidEmail && isValidTicketNumber {
 			
@@ -94,6 +97,15 @@ func getUserInput () (string, string, string, uint) {
 
 func bookTicket (userTickets uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - userTickets
+
+	// create a map for a user
+
+	var userData = make(map[string]string)
+	userData["firstName"] = firstName
+	userData["lastName"] = lastName
+	userData["email"] = email
+	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTickets), 10)
+
 	bookings = append(bookings, firstName + " " + lastName)
 
 	// fmt.Printf("The whole slice: %v\n", bookings)
