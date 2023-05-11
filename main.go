@@ -1,35 +1,29 @@
 package main
 
 import (
-		"fmt"
-		"strings"
-		"strconv"
-		
-)		
-
+	"fmt"
+	"strconv"
+)
 
 const conferenceTickets = 50
-	// var conferenceName = "Go Conference" //dry go version below// returned to original form because shorthand cannot be used on package level variables****
+
+// var conferenceName = "Go Conference" //dry go version below// returned to original form because shorthand cannot be used on package level variables****
 var conferenceName = "Go Conference"
 var remainingTickets uint = 50
-// var bookings []string //dry go version below// ****
-var bookings = []string{}
-
-
+var bookings = make([]map[string]string, 0)
 
 func main() {
 
-
 	greetUsers()
-	
+
 	for {
-		
+
 		firstName, lastName, email, userTickets := getUserInput()
 		isValidName, isValidEmail, isValidTicketNumber := ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets)
 
 		if isValidName && isValidEmail && isValidTicketNumber {
-			
-			bookTicket (userTickets, firstName, lastName, email)
+
+			bookTicket(userTickets, firstName, lastName, email)
 
 			firstNames := getFirstNames()
 			fmt.Printf("The first names of the bookings are : %v\n", firstNames)
@@ -51,7 +45,7 @@ func main() {
 			if !isValidTicketNumber {
 				fmt.Println("number of tickets you entered is invalid")
 			}
-		}		
+		}
 	}
 	// var bookings = [50]string{}// dry go version below
 	// bookings := [50]string{}
@@ -67,14 +61,12 @@ func getFirstNames() []string {
 	firstNames := []string{}
 
 	for _, booking := range bookings { // _ are used to ignore a variable you don't want to use
-		var names = strings.Fields(booking)
-		firstNames = append(firstNames, names[0])
+		firstNames = append(firstNames, booking["firstName"])
 	}
 	return firstNames
 }
 
-
-func getUserInput () (string, string, string, uint) {
+func getUserInput() (string, string, string, uint) {
 	var firstName string
 	var lastName string
 	var email string
@@ -95,7 +87,7 @@ func getUserInput () (string, string, string, uint) {
 	return firstName, lastName, email, userTickets
 }
 
-func bookTicket (userTickets uint, firstName string, lastName string, email string) {
+func bookTicket(userTickets uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - userTickets
 
 	// create a map for a user
@@ -106,7 +98,8 @@ func bookTicket (userTickets uint, firstName string, lastName string, email stri
 	userData["email"] = email
 	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTickets), 10)
 
-	bookings = append(bookings, firstName + " " + lastName)
+	bookings = append(bookings, userData)
+	fmt.Printf("List of bookings is %v\n", bookings)
 
 	// fmt.Printf("The whole slice: %v\n", bookings)
 	// fmt.Printf("The first value: %v\n", bookings[0])
